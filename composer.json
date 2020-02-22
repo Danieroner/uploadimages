@@ -9,6 +9,9 @@
             "email": "jesusbotw@gmail.com"
         }
     ],
+    "scripts": {
+        "start:dev": "php -S localhost:8000 -t src"
+    },
     "autoload": {
         "psr-4": {
             "Src\\": ""
