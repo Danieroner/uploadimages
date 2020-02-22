@@ -17,7 +17,7 @@ $router->get('/', function () use ($twig) {
     $dbconn->free($result);
     $dbconn->close();
     $time = (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
-    
+
     echo $twig->render('index.twig', [
         'name' => $context,
         'time' => round($time, 4)
