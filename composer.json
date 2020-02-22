@@ -1,0 +1,20 @@
+{
+    "name": "app/store-images",
+    "description": "test",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jesús Pereira",
+            "email": "jesusbotw@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Src\\": ""
+        }
+    },
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
