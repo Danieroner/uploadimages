@@ -5,7 +5,12 @@
 <div class="row center">
     <a href="/add"
         class="btn-large waves-effect red accent-3">Add Image</a>
-        {{ name }}
+        <ul>
+            {% for post in name %}
+                <li>{{ post.id }}</li>
+                <li>{{ post.url }}</li>
+            {% endfor %}
+        </ul>
 </div>
 <br><br>
 {% endblock %}

@@ -14,30 +14,45 @@ define('CONFIG', [
 ]);
 
 class Database  {
-    private static array $instances = [];
 
-    protected function construct__() {
-        pg_connect(
-            'host='    . CONFIG['DB_HOST'] .
-            'port='    . 5432 .
-            'dbname='  . CONFIG['DB_NAME'] . 
-            'user='    . CONFIG['DB_USER'] .
-            'password='. CONFIG['DB_PASS']
-        );
-    }
+    private static $instance;
+    private static $pg;
+
+    protected function construct__() {}
 
     protected function __clone() {}
 
     public function __wakeup() {
-        throw new \Exception('Cannot unserialize a singleton.');
+        throw new \Exception('Cannot unserialize.');
     }
 
     public static function getInstance(): Database {
-        $cls = static::class;
-        if(!isset(static::$instances[$cls])) {
-            static::$instances[$cls] = new static;
+        if (self::$instance === null) {
+            self::$instance = new self();
+            self::$pg = pg_connect(
+                'host='    . CONFIG['DB_HOST'] . ' ' .
+                'port='    . 5432              . ' ' .
+                'dbname='  . CONFIG['DB_NAME'] . ' ' .
+                'user='    . CONFIG['DB_USER'] . ' ' .
+                'password='. CONFIG['DB_PASS']
+            )or die('Could not connect: ' . pg_last_error());
         }
+        return self::$instance;
+    }
 
-        return static::$instances[$cls];
+    public function query(string $query) {
+        return pg_query($query);
+    }
+
+    public function all($result) {
+        return pg_fetch_all($result, PGSQL_ASSOC);
+    }
+
+    public function free($result) {
+        return pg_free_result($result);
+    }
+
+    public function close() {
+        return pg_close(self::$pg);
     }
 }
