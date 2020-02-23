@@ -36,22 +36,30 @@ class HandleFiles implements Ifiles {
         return false;
     }
 
-    public function run() {
-        if(is_uploaded_file($this->file['tmp_name'])) {
-            $tmp_name = $this->file['tmp_name'];
-            $img_name = basename($this->file['name']);
-
-            if (!file_exists($this->upload_dir)) {
-                if (!mkdir($this->upload_dir, 0777, true)) {
-                    die('Failed to create folders...');
-                }
-            }
-
-            if (move_uploaded_file($tmp_name, 
-            $this->upload_dir . DIRECTORY_SEPARATOR . $img_name)) {
-                return 'true';
-            }
+    public function run(): string {
+        if(!is_uploaded_file($this->file['tmp_name'])) {
+            return 'false';
         }
-        return 'false';
+
+        $tmp_name = $this->file['tmp_name'];
+        $img_name = basename($this->file['name']);
+
+        if (!file_exists($this->upload_dir)) {
+            if (!mkdir($this->upload_dir, 0777, true)) 
+                die('Failed to create folders...');
+        }
+
+        if(!$this->allowed($this->file)) {
+            return 'no se puede';
+        }
+
+        if($this->file['size'] > $this->max_size) {
+            return 'archivo muy grande';
+        }
+
+        if (move_uploaded_file($tmp_name, 
+        $this->upload_dir . DIRECTORY_SEPARATOR . $img_name)) {
+            print_r($this->file);
+        }
     }
 }
