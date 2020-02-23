@@ -17,7 +17,7 @@ class HandleFiles implements Ifiles {
         'image/png'
     ];
 
-    protected int $max_size = 2048;
+    protected int $max_size = 5242880; // 5mb
 
     public function __construct(array $file) {
         foreach ($file as $element) {
@@ -38,11 +38,14 @@ class HandleFiles implements Ifiles {
 
     public function run(): string {
         if(!is_uploaded_file($this->file['tmp_name'])) {
-            return 'false';
+            return 'falseee';
         }
 
         $tmp_name = $this->file['tmp_name'];
-        $img_name = basename($this->file['name']);
+        
+        $img_name = basename(substr(md5(sha1(uniqid($this->file['name']))), 0, 8));
+        $ext = explode('.', $this->file['name']);
+        $img_ext = end($ext);
 
         if (!file_exists($this->upload_dir)) {
             if (!mkdir($this->upload_dir, 0777, true)) 
@@ -54,12 +57,13 @@ class HandleFiles implements Ifiles {
         }
 
         if($this->file['size'] > $this->max_size) {
+            echo $this->file['size'];
             return 'archivo muy grande';
         }
 
         if (move_uploaded_file($tmp_name, 
-        $this->upload_dir . DIRECTORY_SEPARATOR . $img_name)) {
-            print_r($this->file);
+        $this->upload_dir . DIRECTORY_SEPARATOR . $img_name . '.' . $img_ext)) {
+            return 'correcto!';
         }
     }
 }

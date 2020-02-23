@@ -5,7 +5,7 @@
     <div class="container">
         <div class="container m-auto">
             <div class="row card-panel">
-                <form class="col s12" method="POST" action="/add" enctype="multipart/form-data">
+                <form class="col s12" id="form" name="form" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">mode_edit</i>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="row">
                         <div class="file-field input-field">
-                            <button class="btn waves-effect waves-light" 
+                            <button class="btn waves-effect waves-light" id="send-data" 
                             type="submit" name="action">Submit
                                 <i class="material-icons right">send</i>
                             </button>
@@ -41,7 +41,12 @@
                     </div>
                 </form>
             </div>
+            <div class="row" id="response">
+                <p>test</p>
+            </div>
+            <div id="load"></div>
         </div>
     </div>
 </div>
+<script src="./public/js/handler.js"></script>
 {% endblock %}
