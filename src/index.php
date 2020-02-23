@@ -33,26 +33,29 @@ $router->get('/add', function () use ($twig) {
 });
 
 $router->post('/add', function () {
-    if(is_uploaded_file($_FILES['image']['tmp_name'])) {
-        $upload_dir = __DIR__ . '\uploads';
-        $tmp_name = $_FILES['image']['tmp_name'];
-        $img_name = basename($_FILES['image']['name']);
+    $handler = new HandleFiles($_FILES);
+    echo $handler->run();
 
-        if (!file_exists($upload_dir)) {
-            if (!mkdir($upload_dir, 0777, true)) {
-                die('Failed to create folders...');
-            }
-        }
-        if (HandleFiles::allowed($_FILES)) {
-            echo 'true';
-        } else {
-            echo 'false';
-        }
-        // move_uploaded_file($tmp_name, 
-        //     $upload_dir . DIRECTORY_SEPARATOR . $img_name
-        // );
+    // if(is_uploaded_file($_FILES['image']['tmp_name'])) {
+    //     $upload_dir = __DIR__ . '\uploads';
+    //     $tmp_name = $_FILES['image']['tmp_name'];
+    //     $img_name = basename($_FILES['image']['name']);
 
-    }
+    //     if (!file_exists($upload_dir)) {
+    //         if (!mkdir($upload_dir, 0777, true)) {
+    //             die('Failed to create folders...');
+    //         }
+    //     }
+    //     if (HandleFiles::allowed($_FILES)) {
+    //         echo 'true';
+    //     } else {
+    //         echo 'false';
+    //     }
+    //     move_uploaded_file($tmp_name, 
+    //         $upload_dir . DIRECTORY_SEPARATOR . $img_name
+    //     );
+
+    // }
 });
 
 $router->run();
