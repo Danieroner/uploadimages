@@ -47,6 +47,7 @@ class Handler {
                 switch (+request.responseText) {
                     case 201:
                         res.innerHTML = `<div class="card-panel light-blue darken-1"><span class="white-text text-darken-2"><h5>The image was successfully uploaded</h5></span></div>`;
+                        setTimeout(() => location.href = '/', 700);
                         break;
                     case 431:
                         res.innerHTML = `<div class="card-panel yellow lighten-1"><span class="black-text text-darken-2"><h5>The image cannot exceed 5 mb</h5></span></div>`;
