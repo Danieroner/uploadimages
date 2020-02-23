@@ -58,7 +58,6 @@ class HandleFiles implements Ifiles {
         }
 
         if($this->file['size'] > $this->max_size) {
-            echo $this->file['size'];
             return 431;
         }
 

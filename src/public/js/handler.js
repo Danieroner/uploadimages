@@ -33,6 +33,11 @@ class Handler {
                 <div class="progress">
                     <div class="determinate" style="width: ${percentComplete}%"></div>
                 </div>`;
+
+            if (percentComplete === 100) {
+                load.innerHTML = '';
+            }
+
         }, false);
 
         request.send(formData);
@@ -41,16 +46,16 @@ class Handler {
             if(this.readyState == 4 && this.status == 200) {
                 switch (+request.responseText) {
                     case 201:
-                        res.innerHTML = 'exito total';
+                        res.innerHTML = `<div class="card-panel light-blue darken-1"><span class="white-text text-darken-2"><h5>The image was successfully uploaded</h5></span></div>`;
                         break;
                     case 431:
-                        res.innerHTML = 'archivo muy grande';
+                        res.innerHTML = `<div class="card-panel yellow lighten-1"><span class="black-text text-darken-2"><h5>The image cannot exceed 5 mb</h5></span></div>`;
                         break;
-                    case 400:
-                        res.innerHTML = 'formato no permitido';
+                    case 401:
+                        res.innerHTML = `<div class="card-panel yellow lighten-1"><span class="black-text text-darken-2"><h5>This format is not allowed, only .jpg .png .gif</h5></span></div>`;
                         break;
                     case 500:
-                        res.innerHTML = 'error en el servidor';
+                        res.innerHTML = `<div class="card-panel deep-orange accent-4"><span class="white-text text-darken-2"><h5>Internal Error</h5></span></div>`;
                         break;
                 }
             }
