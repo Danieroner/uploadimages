@@ -14,7 +14,8 @@ class HandleFiles implements Ifiles {
     protected array $extensions = [
         'image/jpg',
         'image/jpeg',
-        'image/png'
+        'image/png',
+        'image/gif'
     ];
 
     protected int $max_size = 5242880; // 5mb
@@ -36,9 +37,9 @@ class HandleFiles implements Ifiles {
         return false;
     }
 
-    public function run(): string {
+    public function run(): int {
         if(!is_uploaded_file($this->file['tmp_name'])) {
-            return 'falseee';
+            return 500;
         }
 
         $tmp_name = $this->file['tmp_name'];
@@ -53,17 +54,17 @@ class HandleFiles implements Ifiles {
         }
 
         if(!$this->allowed($this->file)) {
-            return 'no se puede';
+            return 401;
         }
 
         if($this->file['size'] > $this->max_size) {
             echo $this->file['size'];
-            return 'archivo muy grande';
+            return 431;
         }
 
         if (move_uploaded_file($tmp_name, 
         $this->upload_dir . DIRECTORY_SEPARATOR . $img_name . '.' . $img_ext)) {
-            return 'correcto!';
+            return 201;
         }
     }
 }

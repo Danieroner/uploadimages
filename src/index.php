@@ -34,8 +34,6 @@ $router->get('/add', function () use ($twig) {
 
 $router->post('/add', function () {
     $handler = new HandleFiles($_FILES);
-    //print_r($_FILES);
-    print_r($_POST);
     echo $handler->run();
 });
 
