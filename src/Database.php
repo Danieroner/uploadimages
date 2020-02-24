@@ -50,7 +50,7 @@ class Database  {
         return pg_execute($conn, $name, $params);
     }
 
-    public function all($result): array {
+    public function all($result) {
         return pg_fetch_all($result, PGSQL_ASSOC);
     }
 

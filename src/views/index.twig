@@ -3,14 +3,34 @@
 {% block content %}
 <br>
 <div class="row center">
-    <a href="/add"
-        class="btn-large waves-effect red accent-3">Get Started</a>
-        <ul>
-            {% for post in context %}
-                <li>{{ post.id }}</li>
-                <li>{{ post.url }}</li>
-            {% endfor %}
-        </ul>
+    <a href="/add" class="btn-large waves-effect red accent-3">Get Started</a>
+    <br><br><br><br>
+    <div class="row">
+        {% for post in context %}
+        <div class="col m3">
+            <div class="card">
+                <a href="http://google.com" target="_blank" class="card-image waves-effect waves-block waves-light">
+                    <img height="150" data-src="{{post.image}}" class="activator" src="https://i.imgur.com/fpAlWOZ.png">
+                </a>
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 <br><br>
+<script>
+    window.addEventListener('load', function () {
+        for (let index = 0; index < document.images.length; index++) {
+            let image = document.images[index];
+            let downloadImage = new Image();
+
+            downloadImage.onload = function () {
+                image.src = this.src;
+            }
+
+            downloadImage.src = `./uploads/${image.dataset.src}`;
+        }
+    });
+</script>
 {% endblock %}

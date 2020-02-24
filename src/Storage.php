@@ -14,11 +14,11 @@ class Storage {
         $this->database = Database::getInstance();
     }
 
-    public function show(): array {
+    public function show() {
         $result = $this->database->prepare(
             $this->database::$pg,
             'query',
-            'SELECT * FROM public.images'
+            'SELECT * FROM public.images ORDER BY id DESC'
         );
         $result = $this->database->exec(
             $this->database::$pg,

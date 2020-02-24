@@ -12,10 +12,10 @@
 </head>
 
 <body>
-    <nav class="deep-purple" role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" href="./" class="brand-logo">Logo</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#">Navbar Link</a></li>
+    <nav class="light-blue accent-4" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="./" class="brand-logo">Php App</a>
+        <ul class="right hide-on-med-and-down">
+                <li><a href="/">Index</a></li>
             </ul>
 
             <ul id="nav-mobile" class="sidenav">
@@ -30,9 +30,11 @@
             {% endblock %}
         </div>
     </div>
-    <footer>
+    <footer class="">
         <div class="container center">
-            <strong>Run Time: {{ runtime }} ms</strong>
+            <div class="row">
+                <strong>Run Time: {{ runtime }} ms</strong>
+            </div>
         </div>
     </footer>
 
