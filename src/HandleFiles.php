@@ -3,7 +3,8 @@
 namespace Src\Handle;
 
 interface iFiles {
-    public function allowed(array $file);
+    public function allowed(array $file): bool;
+    public function run(): int;
 }
 
 class HandleFiles implements Ifiles {
@@ -44,7 +45,9 @@ class HandleFiles implements Ifiles {
 
         $tmp_name = $this->file['tmp_name'];
         
-        $img_name = basename(substr(md5(sha1(uniqid($this->file['name']))), 0, 8));
+        $img_name = basename(substr(
+            md5(sha1(uniqid($this->file['name']))), 0, 8
+        ));
         $ext = explode('.', $this->file['name']);
         $img_ext = end($ext);
 

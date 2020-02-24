@@ -11,11 +11,11 @@ $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '\views');
 $twig = new \Twig\Environment($loader);
 
 $router->get('/', function () use ($twig) {
-    $dbconn = Database::getInstance();
-    $result = $dbconn->query('SELECT * FROM public.images');
-    $context = $dbconn->all($result);
-    $dbconn->free($result);
-    $dbconn->close();
+    $database = Database::getInstance();
+    $result = $database->query('SELECT * FROM public.images');
+    $context = $database->all($result);
+    $database->free($result);
+    $database->close();
 
     $time = (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
 

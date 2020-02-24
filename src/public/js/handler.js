@@ -13,8 +13,7 @@ class Handler {
 
     constructor() {}
 
-    onRequest(event) {
-        event.preventDefault();
+    onRequest() {
 
         formData.append(form.title.name, form.title.value);
         formData.append(form.description.name, form.description.value);
@@ -65,5 +64,22 @@ class Handler {
 }
 
 window.addEventListener('load', () => {
-    button.addEventListener('click', new Handler().onRequest);
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (form.title.value == ''              ||
+            form.title.value.lenght === 0       ||
+            /^\s+$/.test(form.title.value)      ||
+            form.description.value === ''       ||
+            form.description.value.lenght === 0 ||
+            /^\s+$/.test(form.description.value)||
+            form.image.files[0] === undefined)    
+        {
+            res.innerHTML = `<div class="card-panel deep-orange accent-4"><span class="white-text text-darken-2"><h5>Empty data
+            </h5></span></div>`;
+        } else {
+            new Handler().onRequest();
+        }
+
+    });
 });
