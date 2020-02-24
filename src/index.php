@@ -4,23 +4,20 @@ require '../vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '\views');
 $twig = new \Twig\Environment($loader);
-
 $router = new \Bramus\Router\Router();
-
 $storage = new App\Storage();
+$runtime = new App\Runtime();
 
-$time = (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
-
-$router->get('/', function () use ($twig, $storage, $time) {
+$router->get('/', function () use ($twig, $storage, $runtime) {
     echo $twig->render('index.twig', [
         'context' => $storage->show(),
-        'time' => round($time, 4)
+        'runtime' => $runtime->run()
     ]);
 });
 
-$router->get('/add', function () use ($twig, $time) {
+$router->get('/add', function () use ($twig, $runtime) {
     echo $twig->render('add.twig', [
-        'time' => round($time, 4)
+        'runtime' => $runtime->run()
     ]);
 });
 
