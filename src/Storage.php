@@ -1,5 +1,7 @@
 <?php 
 
+declare(strict_types=1);
+
 namespace App;
 
 use App\Database;
@@ -13,8 +15,15 @@ class Storage {
     }
 
     public function show(): array {
-        $result = $this->database->query(
+        $result = $this->database->prepare(
+            $this->database::$pg,
+            'query',
             'SELECT * FROM public.images'
+        );
+        $result = $this->database->exec(
+            $this->database::$pg,
+            'query',
+            array()
         );
         $context = $this->database->all($result);
         $this->database->free($result);
@@ -27,12 +36,18 @@ class Storage {
         $slug = str_replace(' ', '-', $title);
         $description = $credentials['description'];
 
-        $result = $this->database->query(
+        $result = $this->database->prepare(
+            $this->database::$pg,
+            'insert',
             "INSERT INTO 
-            public.images (id, url, title, description, image) 
-            VALUES ((SELECT MAX(id)+1 FROM public.images), '$slug', '$title', '$description', '$filename')"
+            public.images (url, title, description, image) 
+            VALUES ($1, $2, $3, $4)"
         );
-
+        $result = $this->database->exec(
+            $this->database::$pg,
+            'insert',
+            array($slug, $title, $description, $filename)
+        );
         $this->database->free($result);
     }
 

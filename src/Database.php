@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 $content = file_get_contents('../credentials.json');
@@ -16,7 +18,7 @@ define('CONFIG', [
 class Database  {
 
     private static $instance;
-    private static $pg;
+    public static $pg;
 
     protected function construct__() {}
 
@@ -40,19 +42,23 @@ class Database  {
         return self::$instance;
     }
 
-    public function query(string $query) {
-        return pg_query($query);
+    public function prepare($conn, string $name, string $query) {
+        return pg_prepare($conn, $name, $query);
     }
 
-    public function all($result) {
+    public function exec($conn, string $name, array $params) {
+        return pg_execute($conn, $name, $params);
+    }
+
+    public function all($result): array {
         return pg_fetch_all($result, PGSQL_ASSOC);
     }
 
-    public function free($result) {
+    public function free($result): bool {
         return pg_free_result($result);
     }
 
-    public function close() {
+    public function close(): bool {
         return pg_close(self::$pg);
     }
 }

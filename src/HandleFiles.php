@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 interface iFiles {
@@ -10,14 +12,18 @@ interface iFiles {
 class HandleFiles implements Ifiles {
 
     public array $file;
+
     public bool $status;
+
     protected string $upload_dir = __DIR__ . '\uploads';
+
     protected array $extensions = [
         'image/jpg',
         'image/jpeg',
         'image/png',
         'image/gif'
     ];
+    
     protected int $max_size = 5242880; // 5mb
 
     public function __construct(array $file) {
@@ -34,7 +40,6 @@ class HandleFiles implements Ifiles {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -68,7 +73,7 @@ class HandleFiles implements Ifiles {
         $ext = explode('.', $this->file['name']);
         $img_ext = end($ext);
 
-        // Insert on database
+        // Name to database
         $this->file['name'] = $img_name . '.' . $img_ext;
 
         $final_image = $this->upload_dir . DIRECTORY_SEPARATOR . $img_name . '.' . $img_ext;     
