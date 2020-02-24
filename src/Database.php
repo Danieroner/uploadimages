@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Conection;
+namespace App;
 
 $content = file_get_contents('../credentials.json');
 $encode = utf8_encode($content);

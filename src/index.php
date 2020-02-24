@@ -2,39 +2,37 @@
 
 require '../vendor/autoload.php';
 
-use Src\Conection\Database;
-use Src\Handle\HandleFiles;
-
-$router = new \Bramus\Router\Router();
-
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '\views');
 $twig = new \Twig\Environment($loader);
 
-$router->get('/', function () use ($twig) {
-    $database = Database::getInstance();
-    $result = $database->query('SELECT * FROM public.images');
-    $context = $database->all($result);
-    $database->free($result);
-    $database->close();
+$router = new \Bramus\Router\Router();
 
-    $time = (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
+$storage = new App\Storage();
 
+$time = (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
+
+$router->get('/', function () use ($twig, $storage, $time) {
     echo $twig->render('index.twig', [
-        'name' => $context,
+        'context' => $storage->show(),
         'time' => round($time, 4)
     ]);
 });
 
-$router->get('/add', function () use ($twig) {
-    $time = (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']);
+$router->get('/add', function () use ($twig, $time) {
     echo $twig->render('add.twig', [
         'time' => round($time, 4)
     ]);
 });
 
-$router->post('/add', function () {
-    $handler = new HandleFiles($_FILES);
-    echo $handler->run();
+$router->post('/add', function () use ($storage) {
+    $handle = new App\HandleFiles($_FILES);
+
+    echo $handle->run();
+
+    if (!$handle->status) return;
+
+    $storage->save($_POST, $handle->file['name']);
+
 });
 
 $router->run();

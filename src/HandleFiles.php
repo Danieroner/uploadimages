@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Handle;
+namespace App;
 
 interface iFiles {
     public function allowed(array $file): bool;
@@ -9,19 +9,19 @@ interface iFiles {
 
 class HandleFiles implements Ifiles {
 
-    protected array $file;
+    public array $file;
+    public bool $status;
     protected string $upload_dir = __DIR__ . '\uploads';
-
     protected array $extensions = [
         'image/jpg',
         'image/jpeg',
         'image/png',
         'image/gif'
     ];
-
     protected int $max_size = 5242880; // 5mb
 
     public function __construct(array $file) {
+        $this->status = true;
         foreach ($file as $element) {
             $this->file = $file['image'];
         }
@@ -39,34 +39,44 @@ class HandleFiles implements Ifiles {
     }
 
     public function run(): int {
+
         if(!is_uploaded_file($this->file['tmp_name'])) {
+            $this->status = false;
             return 500;
         }
 
-        $tmp_name = $this->file['tmp_name'];
-        
-        $img_name = basename(substr(
-            md5(sha1(uniqid($this->file['name']))), 0, 8
-        ));
-        $ext = explode('.', $this->file['name']);
-        $img_ext = end($ext);
+        if(!$this->allowed($this->file)) {
+            $this->status = false;
+            return 401;
+        }
+
+        if($this->file['size'] > $this->max_size) {
+            $this->status = false;
+            return 431;
+        }
 
         if (!file_exists($this->upload_dir)) {
             if (!mkdir($this->upload_dir, 0777, true)) 
                 die('Failed to create folders...');
         }
 
-        if(!$this->allowed($this->file)) {
-            return 401;
-        }
+        $tmp_name = $this->file['tmp_name'];
+        $img_name = basename(substr(
+            md5(sha1(uniqid($this->file['name']))), 0, 8
+        ));
+        
+        $ext = explode('.', $this->file['name']);
+        $img_ext = end($ext);
 
-        if($this->file['size'] > $this->max_size) {
-            return 431;
-        }
+        // Insert on database
+        $this->file['name'] = $img_name . '.' . $img_ext;
 
-        if (move_uploaded_file($tmp_name, 
-        $this->upload_dir . DIRECTORY_SEPARATOR . $img_name . '.' . $img_ext)) {
-            return 201;
+        $final_image = $this->upload_dir . DIRECTORY_SEPARATOR . $img_name . '.' . $img_ext;     
+
+        if (!move_uploaded_file($tmp_name, $final_image)) {
+            die('Failed to move file...');
         }
+        
+        return 201;
     }
 }

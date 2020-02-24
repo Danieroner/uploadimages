@@ -43,6 +43,7 @@ class Handler {
 
         request.onreadystatechange = function () {
             if(this.readyState == 4 && this.status == 200) {
+                res.innerHTML = request.responseText;
                 switch (+request.responseText) {
                     case 201:
                         res.innerHTML = `<div class="card-panel light-blue darken-1"><span class="white-text text-darken-2"><h5>The image was successfully uploaded</h5></span></div>`;

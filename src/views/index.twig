@@ -6,7 +6,7 @@
     <a href="/add"
         class="btn-large waves-effect red accent-3">Add Image</a>
         <ul>
-            {% for post in name %}
+            {% for post in context %}
                 <li>{{ post.id }}</li>
                 <li>{{ post.url }}</li>
             {% endfor %}
