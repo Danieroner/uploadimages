@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "moduleResolution": "Classic",
+    "module": "commonjs",
+    "declaration": false,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "pretty": true,
+    "allowUnreachableCode": true,
+    "allowUnusedLabels": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": false,
+    "noImplicitUseStrict": false,
+    "outDir": "./src/public/js",
+    "baseUrl": "./src/ts",
+    "listFiles": false,
+    "noEmitHelpers": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./scr/public/js/handle.js",
+    "./src/public/js/materialize.min.js"
+  ],
+  "compileOnSave": false
+}
