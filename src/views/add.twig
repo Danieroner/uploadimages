@@ -9,14 +9,14 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">mode_edit</i>
-                            <input name="title" id="first_name" type="text" class="validate" />
+                            <input minlength="2" name="title" id="first_name" type="text" class="validate" />
                             <label for="first_name">Title</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">mode_edit</i>
-                            <textarea name="description" id="textarea2" class="materialize-textarea validate" data-length="120"></textarea>
+                            <textarea minlength="2" name="description" id="textarea2" class="materialize-textarea validate" data-length="120"></textarea>
                             <label for="textarea2">Short description</label>
                         </div>
                       </div>
@@ -24,7 +24,7 @@
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>File</span>
-                                <input type="file" name="image" />
+                                <input id="file" type="file" name="image" />
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text" placeholder="Upload one file" />
@@ -46,5 +46,5 @@
         </div>
     </div>
 </div>
-<script src="./public/js/handle.js"></script>
+<script data-main="./public/js/handle.js" src="./public/js/require.min.js"></script>
 {% endblock %}

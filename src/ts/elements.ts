@@ -5,5 +5,5 @@ export const request: XMLHttpRequest = new XMLHttpRequest();
 
 export const formData: FormData = new FormData(form);
 
-export let response = <HTMLElement>document.getElementById('response');
-export let load: HTMLElement | any = document.getElementById('load');
+export let response: HTMLElement = document.getElementById('response');
+export let load: HTMLElement = document.getElementById('load');
