@@ -2,25 +2,31 @@
 
 require '../vendor/autoload.php';
 
+
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '\views');
 $twig = new \Twig\Environment($loader);
+
 $router = new \Bramus\Router\Router();
 $storage = new App\Storage();
 $runtime = new App\Runtime();
 
-$router->get('/', function () use ($twig, $storage, $runtime) {
-    $_ENV['database_type'] = 'test';
-    var_dump(getenv());
+$router->get('/', function () use ($runtime, $twig, $storage) {
+
+    $context = $storage->show(new App\PostgresQueryBuilder());
+    
     echo $twig->render('index.twig', [
-        'context' => $storage->show(),
+        'context' => $context,
         'runtime' => $runtime->run()
     ]);
+
 });
 
-$router->get('/add', function () use ($twig, $runtime) {
+$router->get('/add', function () use ($runtime, $twig) {
+
     echo $twig->render('add.twig', [
         'runtime' => $runtime->run()
     ]);
+
 });
 
 $router->post('/add', function () use ($storage) {
@@ -30,7 +36,11 @@ $router->post('/add', function () use ($storage) {
 
     if (!$handle->status) return;
 
-    $storage->save($_POST, $handle->file['name']);
+    $storage->save(
+        $_POST,
+        $handle->file['name'],
+        new App\PostgresQueryBuilder()
+    );
 
 });
 

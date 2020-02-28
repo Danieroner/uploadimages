@@ -4,63 +4,25 @@ declare(strict_types=1);
 
 namespace App;
 
-defined('Database') or header('Location: /');
 
-$content = file_get_contents('../credentials.json');
-$encode = utf8_encode($content);
-$result = json_decode($encode, true);
+class Database extends \PDO {
 
-define('CONFIG', [
-    'DB_HOST' => $result['DB_HOST'],
-    'DB_USER' => $result['DB_USER'],
-    'DB_PASS' => $result['DB_PASS'],
-    'DB_NAME' => $result['DB_NAME']
-]);
+    public function __construct() {
 
-class Database  {
+        $content = file_get_contents('../credentials.json');
+        $encode = utf8_encode($content);
+        $result = json_decode($encode, true);
 
-    private static $instance;
-    public static $pg;
+        $credentials = $result['db_driver'] . ':host=' . $result['db_host'] . ((!empty($result['db_port'])) ? (';port=' . $result['database']['port']) : '') . ';dbname=' . $result['db_name'];
 
-    protected function construct__() {}
+        parent::__construct($credentials, $result['db_user'], $result['db_pass']);
 
-    protected function __clone() {}
-
-    public function __wakeup() {
-        throw new \Exception('Cannot unserialize.');
-    }
-
-    public static function getInstance(): Database {
-        if (self::$instance === null) {
-            self::$instance = new self();
-            self::$pg = pg_connect(
-                'host='    . CONFIG['DB_HOST'] . ' ' .
-                'port='    . 5432              . ' ' .
-                'dbname='  . CONFIG['DB_NAME'] . ' ' .
-                'user='    . CONFIG['DB_USER'] . ' ' .
-                'password='. CONFIG['DB_PASS']
-            )or die('Could not connect: ' . pg_last_error());
+        try {
+            $this->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        } catch (\PDOException $e) {
+            die($e->getMessage());
         }
-        return self::$instance;
+
     }
 
-    public function prepare($conn, string $name, string $query) {
-        return pg_prepare($conn, $name, $query);
-    }
-
-    public function exec($conn, string $name, array $params) {
-        return pg_execute($conn, $name, $params);
-    }
-
-    public function all($result) {
-        return pg_fetch_all($result, PGSQL_ASSOC);
-    }
-
-    public function free($result): bool {
-        return pg_free_result($result);
-    }
-
-    public function close(): bool {
-        return pg_close(self::$pg);
-    }
 }

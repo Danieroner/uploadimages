@@ -4,56 +4,48 @@ declare(strict_types=1);
 
 namespace App;
 
-defined('Storage') or header('Location: /');
-
 use App\Database;
 
 class Storage {
 
-    protected object $database;
+    protected object $dbh;
 
     public function __construct() {
-        $this->database = Database::getInstance();
+        $this->dbh = new Database();
     }
 
-    public function show() {
-        $result = $this->database->prepare(
-            $this->database::$pg,
-            'query',
-            'SELECT * FROM public.images ORDER BY id DESC'
-        );
-        $result = $this->database->exec(
-            $this->database::$pg,
-            'query',
-            array()
-        );
-        $context = $this->database->all($result);
-        $this->database->free($result);
+    public function show(SQLQueryBuilder $queryBuilder) {
+        $query = $queryBuilder
+            ->select('public.images', ['image'])
+            ->getSQL();
 
-        return $context;
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+
+        $stmt->closeCursor();
+    
+        return $result;
     }
 
-    public function save(array $credentials, string $filename): void {
-        $title = $credentials['title'];
+    public function save(array $credentials, string $filename, SQLQueryBuilder $queryBuilder): void {
+
+        $title = "'" . $credentials['title'] . "'";
         $slug = str_replace(' ', '-', $title);
-        $description = $credentials['description'];
+        $description = "'" . $credentials['description'] . "'";
 
-        $result = $this->database->prepare(
-            $this->database::$pg,
-            'insert',
-            "INSERT INTO 
-            public.images (url, title, description, image) 
-            VALUES ($1, $2, $3, $4)"
-        );
-        $result = $this->database->exec(
-            $this->database::$pg,
-            'insert',
-            array($slug, $title, $description, $filename)
-        );
-        $this->database->free($result);
+        $file = "'" . $filename ."'" ;
+
+        $query = $queryBuilder
+            ->insert('public.images', ['title', 'description', 'url', 'image'], [$title, $description, $slug, $file])
+            ->getSQL();
+        
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+
+        $stmt->closeCursor();
+
     }
 
-    public function __destruct() {
-        $this->database->close();
-    }
 }
