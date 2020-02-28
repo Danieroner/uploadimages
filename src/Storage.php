@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+defined('Storage') or header('Location: /');
+
 use App\Database;
 
 class Storage {

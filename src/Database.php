@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+defined('Database') or header('Location: /');
+
 $content = file_get_contents('../credentials.json');
 $encode = utf8_encode($content);
 $result = json_decode($encode, true);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+defined('Runtime') or header('Location: /');
+
 class Runtime {
 
     protected float $time;

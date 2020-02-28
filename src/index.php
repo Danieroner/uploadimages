@@ -9,6 +9,8 @@ $storage = new App\Storage();
 $runtime = new App\Runtime();
 
 $router->get('/', function () use ($twig, $storage, $runtime) {
+    $_ENV['database_type'] = 'test';
+    var_dump(getenv());
     echo $twig->render('index.twig', [
         'context' => $storage->show(),
         'runtime' => $runtime->run()

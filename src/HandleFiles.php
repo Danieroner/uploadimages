@@ -1,8 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App;
+
+defined('HandleFiles') or header('Location: /');
+
 
 interface iFiles {
     public function allowed(array $file): bool;
