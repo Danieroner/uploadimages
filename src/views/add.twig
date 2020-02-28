@@ -1,4 +1,7 @@
 {% extends 'main.twig' %}
+{% block title %}
+Add -
+{% endblock %}
 
 {% block content %}
 <div class="section no-pad-bot" id="index-banner">
@@ -22,7 +25,7 @@
                       </div>
                     <div class="row">
                         <div class="file-field input-field">
-                            <div class="btn">
+                            <div class="btn blue darken-1 get-started">
                                 <span>File</span>
                                 <input id="file" type="file" name="image" />
                             </div>
@@ -33,7 +36,7 @@
                     </div>
                     <div class="row">
                         <div class="file-field input-field">
-                            <button class="btn waves-effect waves-light" id="send-data" 
+                            <button class="btn waves-effect waves-light blue darken-1 get-started" id="send-data" 
                             type="submit" name="action">Submit
                                 <i class="material-icons right">send</i>
                             </button>
@@ -46,5 +49,5 @@
         </div>
     </div>
 </div>
-<script data-main="./public/js/handle.js" src="./public/js/require.min.js"></script>
+<script data-main="../public/js/handle.js" src="./public/js/require.min.js"></script>
 {% endblock %}

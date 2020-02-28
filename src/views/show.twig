@@ -1,0 +1,66 @@
+{% extends 'main.twig' %}
+{% block title %}
+    {% for post in context %}
+        {{ post.title }} -
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+{% for post in context %}
+<div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator" src="../uploads/{{ post.image }}">
+    </div>
+    <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">{{ post.title }}<i
+                class="material-icons right">more_vert</i></span>
+        <div class="card-content">
+            <p>{{ post.description }}</p>
+        </div>
+    </div>
+    <div class="card-reveal">
+        <div class="row center">
+            <span class="card-title grey-text text-darken-4">Operations<i class="material-icons right">close</i></span>
+            <br><br>
+            <div class="row">
+                <button class="btn waves-effect yellow" type="submit" name="action">Edit
+                    <i class="material-icons right">edit</i>
+                </button>
+            </div>
+            <div class="row">
+                <form>
+                    <input id="image" type="hidden" name="image" value="{{ post.id }}" />
+                    <button id="delete" class="btn waves-effect red" type="submit" name="action">Delete
+                        <i class="material-icons right">delete</i>
+                    </button>
+                </form>
+            </div>
+            <p>Delete or edit any post.</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script>
+    const del = document.getElementById('delete');
+    const id = document.getElementById('image').value;
+
+    del.addEventListener('click', (evt) => {
+        evt.preventDefault();
+
+        const request = new XMLHttpRequest();
+
+        request.open('delete', `/api/${id}`, true);
+
+        request.onload = function () {
+	        
+	        if (request.readyState == 4 && this.status == 200) {
+		        console.log(this.responseText);
+	        } else {
+		        console.error(this.responseText);
+	        }
+        }
+
+        request.send(null);
+    });
+</script>
+{% endblock %}

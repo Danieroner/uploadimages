@@ -14,9 +14,10 @@ class Storage {
         $this->dbh = new Database();
     }
 
-    public function show(SQLQueryBuilder $queryBuilder) {
+    public function all(SQLQueryBuilder $queryBuilder): array {
+
         $query = $queryBuilder
-            ->select('public.images', ['image'])
+            ->select('public.images', ['image, url'])
             ->getSQL();
 
         $stmt = $this->dbh->prepare($query);
@@ -26,7 +27,8 @@ class Storage {
 
         $stmt->closeCursor();
     
-        return $result;
+        return $result ?? [];
+
     }
 
     public function save(array $credentials, string $filename, SQLQueryBuilder $queryBuilder): void {
@@ -45,6 +47,25 @@ class Storage {
         $stmt->execute();
 
         $stmt->closeCursor();
+
+    }
+
+    public function show(SQLQueryBuilder $queryBuilder, string $slug): array {
+        
+        $query = $queryBuilder
+            ->select('public.images', ['*'])
+            ->where('url', $slug, '=')
+            ->limit(1, 0)
+            ->getSQL();
+        
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+            
+        $result = $stmt->fetchAll();
+    
+        $stmt->closeCursor();
+        
+        return $result ?? [];
 
     }
 

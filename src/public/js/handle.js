@@ -16,7 +16,7 @@ define(["require", "exports", "./elements", "./response"], function (require, ex
         elements_1.formData.append(elements_1.form.title.name, elements_1.form.title.value);
         elements_1.formData.append(elements_1.form.description.name, elements_1.form.description.value);
         elements_1.formData.append(elements_1.form.image.name, elements_1.form.image.files[0]);
-        elements_1.request.open('post', '/add', true);
+        elements_1.request.open('post', '/api/add', true);
         elements_1.request.upload.addEventListener('progress', function (ev) {
             if (!ev.lengthComputable) {
                 return;

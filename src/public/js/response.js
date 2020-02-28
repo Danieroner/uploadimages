@@ -14,16 +14,16 @@ var __extends = (this && this.__extends) || (function () {
 define(["require", "exports", "./button"], function (require, exports, button_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ResponseAjax = /** @class */ (function () {
-        function ResponseAjax() {
+    var ResponseAJAX = /** @class */ (function () {
+        function ResponseAJAX() {
         }
-        ResponseAjax.prototype.someOperation = function () {
+        ResponseAJAX.prototype.someOperation = function () {
             var product = this.getResponse();
             product.render();
         };
-        return ResponseAjax;
+        return ResponseAJAX;
     }());
-    exports.ResponseAjax = ResponseAjax;
+    exports.ResponseAJAX = ResponseAJAX;
     var CreateSuccessfully = /** @class */ (function (_super) {
         __extends(CreateSuccessfully, _super);
         function CreateSuccessfully() {
@@ -33,7 +33,7 @@ define(["require", "exports", "./button"], function (require, exports, button_1)
             return new button_1.Successfully();
         };
         return CreateSuccessfully;
-    }(ResponseAjax));
+    }(ResponseAJAX));
     exports.CreateSuccessfully = CreateSuccessfully;
     var CreateExceed = /** @class */ (function (_super) {
         __extends(CreateExceed, _super);
@@ -44,7 +44,7 @@ define(["require", "exports", "./button"], function (require, exports, button_1)
             return new button_1.Exceed();
         };
         return CreateExceed;
-    }(ResponseAjax));
+    }(ResponseAJAX));
     exports.CreateExceed = CreateExceed;
     var CreateNotAllowed = /** @class */ (function (_super) {
         __extends(CreateNotAllowed, _super);
@@ -55,7 +55,7 @@ define(["require", "exports", "./button"], function (require, exports, button_1)
             return new button_1.NotAllowed();
         };
         return CreateNotAllowed;
-    }(ResponseAjax));
+    }(ResponseAJAX));
     exports.CreateNotAllowed = CreateNotAllowed;
     var CreateInternalError = /** @class */ (function (_super) {
         __extends(CreateInternalError, _super);
@@ -66,7 +66,7 @@ define(["require", "exports", "./button"], function (require, exports, button_1)
             return new button_1.InternalError();
         };
         return CreateInternalError;
-    }(ResponseAjax));
+    }(ResponseAJAX));
     exports.CreateInternalError = CreateInternalError;
 });
 //# sourceMappingURL=response.js.map

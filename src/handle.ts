@@ -1,8 +1,8 @@
 import { button, form, response, formData, request, load } from './elements';
-import { ResponseAjax, CreateSuccessfully, CreateExceed, CreateNotAllowed, CreateInternalError } from './response';
+import { ResponseAJAX, CreateSuccessfully, CreateExceed, CreateNotAllowed, CreateInternalError } from './response';
 
 
-function run(response: ResponseAjax) {
+function run(response: ResponseAJAX) {
     response.someOperation();
 }
 
@@ -27,7 +27,7 @@ function makeRun(event: MouseEvent) {
     formData.append(form.description.name, form.description.value);
     formData.append(form.image.name, form.image.files[0]);
 
-    request.open('post', '/add', true);
+    request.open('post', '/api/add', true);
 
     request.upload.addEventListener('progress', (ev: ProgressEvent<XMLHttpRequestEventTarget>) => {
         if (!ev.lengthComputable) {

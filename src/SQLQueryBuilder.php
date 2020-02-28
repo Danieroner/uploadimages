@@ -28,7 +28,7 @@ class MysqlQueryBuilder implements SQLQueryBuilder {
 
     public function select(string $table, array $fields): SQLQueryBuilder {
         $this->reset();
-        $this->query->base = 'SELECT ' . implode(', ', $fields) . ' FROM ' . $table . ' ORDER BY id DESC';
+        $this->query->base = 'SELECT ' . implode(', ', $fields) . ' FROM ' . $table;
         $this->query->type = 'select';
 
         return $this;

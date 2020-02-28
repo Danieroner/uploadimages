@@ -14,7 +14,7 @@ class Runtime {
 
     public function run(): float {
 
-        $round = round($this->time, 4);
+        $round = round($this->time, 3);
 
         return $round;
     }

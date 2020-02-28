@@ -15,12 +15,11 @@ class Database extends \PDO {
 
         $credentials = $result['db_driver'] . ':host=' . $result['db_host'] . ((!empty($result['db_port'])) ? (';port=' . $result['database']['port']) : '') . ';dbname=' . $result['db_name'];
 
-        parent::__construct($credentials, $result['db_user'], $result['db_pass']);
-
         try {
+            parent::__construct($credentials, $result['db_user'], $result['db_pass']);
             $this->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            die('Error: ' . $e->getMessage());
         }
 
     }

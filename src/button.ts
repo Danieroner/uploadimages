@@ -1,4 +1,4 @@
-import { response, form } from './elements';
+import { response } from './elements';
 
 export default interface iResponse {
     render(): void;
