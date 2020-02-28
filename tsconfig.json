@@ -5,7 +5,7 @@
     "sourceMap": true,
     "pretty": true,
     "outDir": "./src/public/js",
-    "baseUrl": "./src/ts",
+    "baseUrl": "./src/",
     "listFiles": false
   },
   "include": [
