@@ -20,7 +20,7 @@ interface SQLQueryBuilder {
 
 class MysqlQueryBuilder implements SQLQueryBuilder {
 
-    protected $query;
+    protected object $query;
 
     protected function reset(): void {
         $this->query = new \stdClass();
