@@ -10,7 +10,7 @@ Technologies used:
 ### Installation
 
 requires [Node.js](https://nodejs.org/) v8+ to run.
-requires [Php.net] 7.4+ to run.
+requires [Php.net](https://www.php.net/) 7.4+ to run.
 
 - composer
 - npm
