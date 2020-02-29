@@ -14,7 +14,7 @@ class HandleFiles implements Ifiles {
 
     public bool $status;
 
-    protected string $upload_dir = __DIR__ . '\uploads';
+    protected string $upload_dir = __DIR__ . DIRECTORY_SEPARATOR .'uploads' . DIRECTORY_SEPARATOR;
 
     protected array $extensions = [
         'image/jpg',
@@ -25,25 +25,26 @@ class HandleFiles implements Ifiles {
     
     protected int $max_size = 5242880; // 5mb
 
-    public function __construct(array $file) {
+    public function __construct(array $file = null) {
         $this->status = true;
-        foreach ($file as $element) {
-            $this->file = $file['image'];
+        if ($file != null) {
+            foreach ($file as $element) {
+                $this->file = $file['image'];
+            }
         }
     }
 
     public function allowed(array $file): bool {
-
         for ($i = 0; $i < count($this->extensions); $i++) { 
             if ($file['type'] == $this->extensions[$i]) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function run(): int {
-
         if(!is_uploaded_file($this->file['tmp_name'])) {
             $this->status = false;
             return 500;
@@ -83,4 +84,15 @@ class HandleFiles implements Ifiles {
         
         return 201;
     }
+
+    public function delete(string $file): void {
+        if (!file_exists($this->upload_dir . $file)) {
+            die('The file doesnt exist...');
+        }
+        
+        if (!unlink($this->upload_dir . $file)) {
+            die('Failed to delete file...');
+        }
+    }
+
 }

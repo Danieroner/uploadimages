@@ -6,12 +6,10 @@ namespace App;
 
 use App\Database;
 
-class Storage {
-
-    protected object $dbh;
+class Storage extends Database {
 
     public function __construct() {
-        $this->dbh = new Database();
+        parent::__construct();
     }
 
     public function all(SQLQueryBuilder $queryBuilder): array {
@@ -20,7 +18,7 @@ class Storage {
             ->select('public.images', ['image, url'])
             ->getSQL();
 
-        $stmt = $this->dbh->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->execute();
         
         $result = $stmt->fetchAll();
@@ -43,7 +41,7 @@ class Storage {
             ->insert('public.images', ['title', 'description', 'url', 'image'], [$title, $description, $slug, $file])
             ->getSQL();
         
-        $stmt = $this->dbh->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->execute();
 
         $stmt->closeCursor();
@@ -58,7 +56,7 @@ class Storage {
             ->limit(1, 0)
             ->getSQL();
         
-        $stmt = $this->dbh->prepare($query);
+        $stmt = $this->prepare($query);
         $stmt->execute();
             
         $result = $stmt->fetchAll();
@@ -66,6 +64,40 @@ class Storage {
         $stmt->closeCursor();
         
         return $result ?? [];
+
+    }
+
+    public function delete(SQLQueryBuilder $queryBuilder, string $id): void {
+
+        $file_query = $queryBuilder
+            ->delete('public.images', [])
+            ->where('id', $id, '=')
+            ->getSQL();
+
+        $file_stmt = $this->prepare($file_query);
+        $file_stmt->execute();
+                    
+
+        $file_stmt->closeCursor();
+        
+    }
+
+    public function getId(SQLQueryBuilder $queryBuilder, string $id): string {
+
+        $query = $queryBuilder
+            ->select('public.images', ['image'])
+            ->where('id', $id, '=')
+            ->limit(1, 0)
+            ->getSQL();
+
+        $stmt = $this->prepare($query);
+        $stmt->execute();
+                    
+        $file = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        $stmt->closeCursor();
+
+        return $file['image'];
 
     }
 

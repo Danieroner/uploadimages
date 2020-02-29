@@ -10,35 +10,29 @@ $storage = new App\Storage();
 $runtime = new App\Runtime();
 
 $router->get('/', function () use ($runtime, $twig, $storage) {
-
     $context = $storage->all(new App\PostgresQueryBuilder());
     
     echo $twig->render('index.twig', [
         'context' => $context,
         'runtime' => $runtime->run()
     ]);
-
 });
 
 $router->get('/add', function () use ($runtime, $twig) {
-
     echo $twig->render('add.twig', [
         'runtime' => $runtime->run()
     ]);
-
 });
 
 $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
 
-    $router->get('/{slug}', function ($slug) use ($runtime, $twig, $storage) {
-
+    $router->get('/{slug}', function (string $slug) use ($runtime, $twig, $storage) {
         $context = $storage->show(new App\PostgresQueryBuilder(), $slug);
         
         echo $twig->render('show.twig', [
             'context' => $context,
             'runtime' => $runtime->run()
         ]);
-    
     });
 
     $router->post('/add', function () use ($storage) {
@@ -53,11 +47,16 @@ $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
             $handle->file['name'],
             new App\PostgresQueryBuilder()
         );
-    
     });
 
-    $router->delete('/{id}', function ($id) {
-        echo $id;
+    $router->delete('/{id}', function (string $id) use ($storage) {
+        $handle = new App\HandleFiles();
+        
+        $file = $storage->getId(new App\PostgresQueryBuilder(), $id);
+
+        $handle->delete($file);
+
+        $storage->delete(new App\PostgresQueryBuilder(), $id);
     });
 
 });
