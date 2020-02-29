@@ -1,6 +1,6 @@
 {
     "name": "app/store-images",
-    "description": "test",
+    "description": "little app for uploading images",
     "type": "project",
     "license": "MIT",
     "authors": [
