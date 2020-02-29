@@ -15,6 +15,15 @@ requires [Php.net] 7.4+ to run.
 - composer
 - npm
 
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ php composer.phar install
+$ npm install
+$ tsc
+$ npm run script start:dev
+```
+
 # Licence
 
 MIT
