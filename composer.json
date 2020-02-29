@@ -18,6 +18,7 @@
         }
     },
     "require": {
+        "php": "^7.4.3",
         "twig/twig": "^3.0",
         "bramus/router": "~1.4"
     }
