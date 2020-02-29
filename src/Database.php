@@ -13,7 +13,7 @@ class Database extends \PDO {
         $encode = utf8_encode($content);
         $result = json_decode($encode, true);
 
-        $credentials = $result['db_driver'] . ':host=' . $result['db_host'] . ((!empty($result['db_port'])) ? (';port=' . $result['database']['port']) : '') . ';dbname=' . $result['db_name'];
+        $credentials = $result['db_driver'] . ':host=' . $result['db_host'] . ((!empty($result['db_port'])) ? (';port=' . $result['db_port']) : '') . ';dbname=' . $result['db_name'];
 
         try {
             parent::__construct($credentials, $result['db_user'], $result['db_pass']);
