@@ -1,5 +1,5 @@
 import { button, form, response, formData, request, load } from './elements';
-import { ResponseAJAX, CreateSuccessfully, CreateExceed, CreateNotAllowed, CreateInternalError } from './response';
+import { ResponseAJAX, CreateSuccessFully, CreateExceed, CreateNotAllowed, CreateInternalError } from './response';
 
 
 function run(response: ResponseAJAX) {
@@ -56,7 +56,7 @@ function makeRun(event: MouseEvent) {
 
             switch (+request.responseText) {
                 case 201:
-                    run(new CreateSuccessfully());
+                    run(new CreateSuccessFully());
                     break;
                 case 431:
                     run(new CreateExceed());

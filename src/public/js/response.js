@@ -24,17 +24,17 @@ define(["require", "exports", "./button"], function (require, exports, button_1)
         return ResponseAJAX;
     }());
     exports.ResponseAJAX = ResponseAJAX;
-    var CreateSuccessfully = /** @class */ (function (_super) {
-        __extends(CreateSuccessfully, _super);
-        function CreateSuccessfully() {
+    var CreateSuccessFully = /** @class */ (function (_super) {
+        __extends(CreateSuccessFully, _super);
+        function CreateSuccessFully() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        CreateSuccessfully.prototype.getResponse = function () {
-            return new button_1.Successfully();
+        CreateSuccessFully.prototype.getResponse = function () {
+            return new button_1.SuccessFully();
         };
-        return CreateSuccessfully;
+        return CreateSuccessFully;
     }(ResponseAJAX));
-    exports.CreateSuccessfully = CreateSuccessfully;
+    exports.CreateSuccessFully = CreateSuccessFully;
     var CreateExceed = /** @class */ (function (_super) {
         __extends(CreateExceed, _super);
         function CreateExceed() {

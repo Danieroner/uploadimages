@@ -1,4 +1,4 @@
-import iResponse, { Successfully, Exceed, NotAllowed, InternalError } from './button';
+import iResponse, { SuccessFully, Exceed, NotAllowed, InternalError } from './button';
 
 export abstract class ResponseAJAX {
     public abstract getResponse(): iResponse;
@@ -9,9 +9,9 @@ export abstract class ResponseAJAX {
     }
 }
 
-export class CreateSuccessfully extends ResponseAJAX {
+export class CreateSuccessFully extends ResponseAJAX {
     public getResponse(): iResponse {
-        return new Successfully();
+        return new SuccessFully();
     }
 }
 

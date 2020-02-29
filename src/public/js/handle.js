@@ -33,7 +33,7 @@ define(["require", "exports", "./elements", "./response"], function (require, ex
                 elements_1.response.innerHTML = elements_1.request.responseText;
                 switch (+elements_1.request.responseText) {
                     case 201:
-                        run(new response_1.CreateSuccessfully());
+                        run(new response_1.CreateSuccessFully());
                         break;
                     case 431:
                         run(new response_1.CreateExceed());

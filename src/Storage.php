@@ -82,6 +82,20 @@ class Storage extends Database {
         
     }
 
+    public function update(SQLQueryBuilder $queryBuilder, array $data, string $id): void {
+
+        $query = $queryBuilder
+            ->update('public.images', [$data])
+            ->where('id', $id, '=')
+            ->getSQL();
+
+        $stmt = $this->prepare($query);
+        $stmt->execute();
+
+        $stmt->closeCursor();
+
+    }
+
     public function getId(SQLQueryBuilder $queryBuilder, string $id): string {
 
         $query = $queryBuilder
@@ -97,7 +111,26 @@ class Storage extends Database {
 
         $stmt->closeCursor();
 
-        return $file['image'];
+        return $file['image'] ?? '';
+
+    }
+
+    public function getOne(SQLQueryBuilder $queryBuilder, $id): array {
+        
+        $query = $queryBuilder
+            ->select('public.images', ['*'])
+            ->where('id', $id, '=')
+            ->limit(1, 0)
+            ->getSQL();
+        
+        $stmt = $this->prepare($query);
+        $stmt->execute();
+
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        $stmt->closeCursor();
+
+        return $result ?? [];
 
     }
 

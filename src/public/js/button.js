@@ -1,16 +1,16 @@
 define(["require", "exports", "./elements"], function (require, exports, elements_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Successfully = /** @class */ (function () {
-        function Successfully() {
+    var SuccessFully = /** @class */ (function () {
+        function SuccessFully() {
         }
-        Successfully.prototype.render = function () {
+        SuccessFully.prototype.render = function () {
             elements_1.response.innerHTML = "\n            <div class=\"card-panel light-blue darken-1\">\n                <span class=\"white-text text-darken-2\">\n                    <h5>The image was successfully uploaded</h5>\n                </span>\n            </div>";
             setTimeout(function () { return location.href = '/'; }, 700);
         };
-        return Successfully;
+        return SuccessFully;
     }());
-    exports.Successfully = Successfully;
+    exports.SuccessFully = SuccessFully;
     var Exceed = /** @class */ (function () {
         function Exceed() {
         }

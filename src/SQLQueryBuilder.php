@@ -16,6 +16,8 @@ interface SQLQueryBuilder {
 
     public function delete(string $table, array $fields): SQLQueryBuilder;
 
+    public function update(string $table, array $fields): SQLQueryBuilder;
+
     public function getSQL(): string;
 
 }
@@ -65,6 +67,15 @@ class MysqlQueryBuilder implements SQLQueryBuilder {
         $this->reset();
         $this->query->base = 'DELETE ' . implode(', ', $fields) . ' FROM ' . $table;
         $this->query->type = 'delete';
+
+        return $this;
+    }
+
+    public function update(string $table, array $fields): SQLQueryBuilder {
+        $this->reset();
+        $this->query->base = 'UPDATE ' . $table . ' SET title = ' . "'" . $fields[0]['title'] . "'" . ', description = ' . "'" . $fields[0]['description'] . "'";
+
+        $this->query->type = 'update';
 
         return $this;
     }

@@ -24,6 +24,14 @@ $router->get('/add', function () use ($runtime, $twig) {
     ]);
 });
 
+$router->get('/edit/{id}', function ($id) use ($runtime, $storage, $twig) {
+    $context = $storage->getOne(new App\PostgresQueryBuilder(), $id);
+    echo $twig->render('edit.twig', [
+        'context' => $context,
+        'runtime' => $runtime->run()
+    ]);
+});
+
 $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
 
     $router->get('/{slug}', function (string $slug) use ($runtime, $twig, $storage) {
@@ -57,6 +65,20 @@ $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
         $handle->delete($file);
 
         $storage->delete(new App\PostgresQueryBuilder(), $id);
+    });
+
+    $router->put('/edit/{$id}', function ($id) use ($storage) {
+        $putfp = fopen('php://input', 'r');
+        $putdata = '';
+
+        while($data = fread($putfp, 1024)) {
+            $putdata .= $data;
+        }
+            
+        fclose($putfp);
+
+        $decode = json_decode($putdata, $assoc = true);
+        $storage->update(new App\PostgresQueryBuilder(), $decode, $id); 
     });
 
 });

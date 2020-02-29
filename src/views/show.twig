@@ -22,14 +22,16 @@
         <div class="row center">
             <span class="card-title grey-text text-darken-4">Operations<i class="material-icons right">close</i></span>
             <br><br>
+            <input id="image" type="hidden" name="image" value="{{ post.id }}" />
             <div class="row">
-                <button class="btn waves-effect yellow" type="submit" name="action">Edit
-                    <i class="material-icons right">edit</i>
-                </button>
+                <a href="/edit/{{ post.id }}">
+                    <button class="btn waves-effect yellow" type="submit" name="action">Edit
+                        <i class="material-icons right">edit</i>
+                    </button>
+                </a>
             </div>
             <div class="row">
                 <form>
-                    <input id="image" type="hidden" name="image" value="{{ post.id }}" />
                     <button id="delete" class="btn waves-effect red" type="submit" name="action">Delete
                         <i class="material-icons right">delete</i>
                     </button>
@@ -41,13 +43,14 @@
 </div>
 {% endfor %}
 <script>
-    const del = document.getElementById('delete');
+    const request = new XMLHttpRequest();
+
     const id = document.getElementById('image').value;
+    const del = document.getElementById('delete');
 
-    del.addEventListener('click', (evt) => {
+
+    del.addEventListener('click', evt => {
         evt.preventDefault();
-
-        const request = new XMLHttpRequest();
 
         request.open('delete', `/api/${id}`, true);
 
@@ -62,5 +65,7 @@
 
         request.send(null);
     });
+
+
 </script>
 {% endblock %}

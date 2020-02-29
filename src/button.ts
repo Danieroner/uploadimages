@@ -4,7 +4,7 @@ export default interface iResponse {
     render(): void;
 }
 
-export  class Successfully implements iResponse {
+export  class SuccessFully implements iResponse {
     public render(): void {
         response.innerHTML = `
             <div class="card-panel light-blue darken-1">
