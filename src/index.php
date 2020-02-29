@@ -36,11 +36,18 @@ $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
 
     $router->get('/{slug}', function (string $slug) use ($runtime, $twig, $storage) {
         $context = $storage->show(new App\PostgresQueryBuilder(), $slug);
-        
-        echo $twig->render('show.twig', [
-            'context' => $context,
-            'runtime' => $runtime->run()
-        ]);
+
+        if (!$context) {
+            header('HTTP/1.1 404 Not Found');
+            echo $twig->render('404.twig', [
+                'runtime' => $runtime->run()
+            ]);
+        } else {
+            echo $twig->render('show.twig', [
+                'context' => $context,
+                'runtime' => $runtime->run()
+            ]);
+        }
     });
 
     $router->post('/add', function () use ($storage) {
@@ -83,9 +90,11 @@ $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
 
 });
 
-$router->set404(function() {
+$router->set404(function() use ($runtime, $twig){
     header('HTTP/1.1 404 Not Found');
-    var_dump('404 t');
+    echo $twig->render('404.twig', [
+        'runtime' => $runtime->run()
+    ]);
 });
 
 $router->run();
