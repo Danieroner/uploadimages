@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'proxima-nova-soft-w03';
+    src: url('../fonts/proxima-nova-soft-w03.woff2') format('woff2'),
+         url('../fonts/proxima-nova-soft-w03.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    font-family: 'proxima-nova-soft-w03';
+    background-color: #F5F5F5;
+}
+
+.get-started {
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+.runtime {
+    font-weight: bold;
+}
+
+.card-content, .card-content {
+    word-wrap: break-word;
+}

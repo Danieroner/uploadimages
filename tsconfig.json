@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es5",
+    "sourceMap": true,
+    "pretty": true,
+    "outDir": "./src/public/js",
+    "baseUrl": "./src/",
+    "listFiles": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./src/public/js/materialize.min.js"
+  ],
+  "compileOnSave": false
+}
