@@ -3,7 +3,9 @@
 require '../vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '\views');
-$twig = new \Twig\Environment($loader);
+$twig = new \Twig\Environment($loader, [
+    'cache' => __DIR__ . '\cache'
+]);
 $router = new \Bramus\Router\Router();
 
 $storage = new App\Storage();
