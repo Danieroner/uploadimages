@@ -18,5 +18,3 @@ requires [Php.net] 7.4+ to run.
 # Licence
 
 MIT
-
-```sh
