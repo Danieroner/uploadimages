@@ -14,21 +14,21 @@ $runtime = new App\Runtime();
 $router->get('/', function () use ($runtime, $twig, $storage) {
     $context = $storage->all(new App\PostgresQueryBuilder());
     
-    echo $twig->render('index.twig', [
+    $twig->display('index.twig', [
         'context' => $context,
         'runtime' => $runtime->run()
     ]);
 });
 
 $router->get('/add', function () use ($runtime, $twig) {
-    echo $twig->render('add.twig', [
+    $twig->display('add.twig', [
         'runtime' => $runtime->run()
     ]);
 });
 
 $router->get('/edit/{id}', function ($id) use ($runtime, $storage, $twig) {
     $context = $storage->getOne(new App\PostgresQueryBuilder(), $id);
-    echo $twig->render('edit.twig', [
+    $twig->display('edit.twig', [
         'context' => $context,
         'runtime' => $runtime->run()
     ]);
@@ -41,11 +41,11 @@ $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
 
         if (!$context) {
             header('HTTP/1.1 404 Not Found');
-            echo $twig->render('404.twig', [
+            $twig->display('404.twig', [
                 'runtime' => $runtime->run()
             ]);
         } else {
-            echo $twig->render('show.twig', [
+            $twig->display('show.twig', [
                 'context' => $context,
                 'runtime' => $runtime->run()
             ]);
@@ -94,7 +94,7 @@ $router->mount('/api', function () use ($router, $runtime, $twig, $storage) {
 
 $router->set404(function() use ($runtime, $twig){
     header('HTTP/1.1 404 Not Found');
-    echo $twig->render('404.twig', [
+    $twig->display('404.twig', [
         'runtime' => $runtime->run()
     ]);
 });
